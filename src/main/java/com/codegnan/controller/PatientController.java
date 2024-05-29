@@ -19,7 +19,7 @@ import com.codegnan.exception.InvalidPatientIdException;
 import com.codegnan.service.PatientService;
 
 @RestController
-@RequestMapping("/patients")
+@RequestMapping("/patient")
 @CrossOrigin(origins ="*") // Allow requests from all origins
 public class PatientController {
     private final PatientService patientService;
@@ -46,14 +46,22 @@ public class PatientController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(savedPatient);
     }
 
+//    @PutMapping("/{id}")
+//    public ResponseEntity<Patient> editPatient(@PathVariable("id") int id, @RequestBody Patient patient) throws InvalidPatientIdException {
+//        if (id != patient.getId()) {
+//            throw new InvalidPatientIdException("id " + id + " does not match patient.id " + patient.getId());
+//        }
+//        Patient editedPatient = patientService.editPatient(patient);
+//        return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedPatient);
+//    }
     @PutMapping("/{id}")
-    public ResponseEntity<Patient> editPatient(@PathVariable("id") int id, @RequestBody Patient patient) throws InvalidPatientIdException {
-        if (id != patient.getId()) {
-            throw new InvalidPatientIdException("id " + id + " does not match patient.id " + patient.getId());
-        }
-        Patient editedPatient = patientService.editPatient(patient);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedPatient);
-    }
+	public ResponseEntity<Patient> editPatient(@PathVariable("id") int id, @RequestBody Patient patient) throws InvalidPatientIdException {
+		if (id != patient.getId()) {
+			throw new InvalidPatientIdException("No patient exists with the id: " + id);
+		}
+		Patient editedPatient = patientService.editPatient(patient);
+		return new ResponseEntity<>(editedPatient, HttpStatus.ACCEPTED);
+	}
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePatient(@PathVariable("id") int id) throws InvalidPatientIdException {

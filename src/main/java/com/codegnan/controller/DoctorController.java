@@ -21,7 +21,7 @@ import com.codegnan.service.DoctorService;
 import com.codegnan.service.PatientService;
 
 @RestController
-@RequestMapping("/doctors")
+@RequestMapping("/doctor")
 @CrossOrigin(origins = "*") // Allow requests from any origin
 public class DoctorController {
     private final DoctorService doctorService;
@@ -57,14 +57,23 @@ public class DoctorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedDoctor); // Return 201 Created with the saved doctor entity
     }
     
+//    @PutMapping("/{id}")
+//    public ResponseEntity<Doctor> editDoctor(@PathVariable("id") int id, @RequestBody Doctor doctor) throws InvalidDoctorIDException {
+//        if (id != doctor.getId()) {
+//            throw new InvalidDoctorIDException("Doctor ID does not match");
+//        }
+//        Doctor editedDoctor = doctorService.editDoctor(doctor);
+//        return ResponseEntity.ok(editedDoctor); // Return 200 OK with the edited doctor entity
+//    }
     @PutMapping("/{id}")
-    public ResponseEntity<Doctor> editDoctor(@PathVariable("id") int id, @RequestBody Doctor doctor) throws InvalidDoctorIDException {
-        if (id != doctor.getId()) {
-            throw new InvalidDoctorIDException("Doctor ID does not match");
-        }
-        Doctor editedDoctor = doctorService.editDoctor(doctor);
-        return ResponseEntity.ok(editedDoctor); // Return 200 OK with the edited doctor entity
-    }
+	public ResponseEntity<Doctor> editDoctor(@PathVariable("id") int id, @RequestBody Doctor doctor) throws InvalidDoctorIDException {
+		if (id != doctor.getId()) {
+			throw new InvalidDoctorIDException("No doctor exists with the id : " + id);
+		}
+		Doctor editedDoctor = doctorService.editDoctor(doctor);
+		ResponseEntity<Doctor> responseEntity = new ResponseEntity<Doctor>(editedDoctor, HttpStatus.ACCEPTED);
+		return responseEntity;
+	}
     
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDoctor(@PathVariable("id") int id) throws InvalidDoctorIDException {

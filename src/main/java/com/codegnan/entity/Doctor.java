@@ -27,13 +27,13 @@ public class Doctor {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-//	public Doctor(int id, String name, String specialization,) {
-//		super();
-//		this.id = id;
-//		this.name = name;
-//		this.specialization = specialization;
-//		
-//	}
+	public Doctor(int id, String name, String specialization) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.specialization = specialization;
+		
+	}
 	public Doctor(String name, String specialization) {
 		super();
 		this.name = name;
@@ -63,6 +63,7 @@ public class Doctor {
 	public void setPatients(List<Patient> patients) {
 		this.patients = patients;
 	}
+	
 	@Override
 	public String toString() {
 		return "Doctor [id=" + id + ", name=" + name + ", specialization=" + specialization + ", patients=" + patients
